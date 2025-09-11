@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+    @media (min-width: 900px) {
+      .gallery { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (min-width: 1400px) {
+      .gallery { grid-template-columns: repeat(5, 1fr); }
+    }
+    .card {
+      position: relative;
+      cursor: pointer;
+    }
+    .media {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery" id="gallery">
+    <figure class="card" data-audio="music/chicken.mp3">
+      <img class="media" src="images/chicken.png" alt="Chicken" />
+    </figure>
+    <figure class="card" data-audio="music/happy.mp3">
+      <img class="media" src="images/happy.png" alt="Happy" />
+    </figure>
+    <figure class="card" data-audio="music/hop.mp3">
+      <img class="media" src="images/hop.png" alt="Hop" />
+    </figure>
+    <figure class="card" data-audio="music/twinkle.mp3">
+      <img class="media" src="images/twinkle.png" alt="Twinkle" />
+    </figure>
+  </main>
+
+  <script>
+    (function () {
+      const gallery = document.getElementById('gallery');
+      const audio = new Audio();
+      audio.loop = true;
+      let currentCard = null;
+
+      function playCard(card) {
+        const src = card.getAttribute('data-audio');
+        if (!src) return;
+
+        if (currentCard === card && !audio.paused) {
+          audio.pause();
+          return;
+        }
+
+        if (audio.src !== src) {
+          audio.src = src;
+        }
+
+        audio.play().catch(err => console.warn('Playback failed:', err));
+        currentCard = card;
+      }
+
+      gallery.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        if (card) playCard(card);
+      });
+    })();
+  </script>
+</body>
+</html>
