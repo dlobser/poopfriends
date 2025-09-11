@@ -37,6 +37,11 @@
       position: relative;
       cursor: pointer;
       margin: 0;
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    .card.playing {
+      border-color: #00ff00;
     }
     .media {
       display: block;
@@ -76,12 +81,25 @@
       audio.loop = true;
       let currentCard = null;
 
+      function updatePlayingState() {
+        // Remove playing class from all cards
+        gallery.querySelectorAll('.card').forEach(card => {
+          card.classList.remove('playing');
+        });
+        
+        // Add playing class to current card if audio is playing
+        if (currentCard && !audio.paused) {
+          currentCard.classList.add('playing');
+        }
+      }
+
       function playCard(card) {
         const src = card.getAttribute('data-audio');
         if (!src) return;
 
         if (currentCard === card && !audio.paused) {
           audio.pause();
+          updatePlayingState();
           return;
         }
 
@@ -91,7 +109,13 @@
 
         audio.play().catch(err => console.warn('Playback failed:', err));
         currentCard = card;
+        updatePlayingState();
       }
+
+      // Listen for audio events to update visual state
+      audio.addEventListener('play', updatePlayingState);
+      audio.addEventListener('pause', updatePlayingState);
+      audio.addEventListener('ended', updatePlayingState);
 
       gallery.addEventListener('click', (e) => {
         const card = e.target.closest('.card');
