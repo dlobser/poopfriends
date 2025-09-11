@@ -3,17 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gallery</title>
+  <title>Sara's MP3 Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       background: #000;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .title {
+      text-align: center;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 20px 0;
+      padding: 0 20px;
     }
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-      padding: 2px;
+      gap: 4px;
+      padding: 4px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     @media (min-width: 900px) {
       .gallery { grid-template-columns: repeat(4, 1fr); }
@@ -24,6 +36,7 @@
     .card {
       position: relative;
       cursor: pointer;
+      margin: 0;
     }
     .media {
       display: block;
@@ -34,7 +47,14 @@
   </style>
 </head>
 <body>
+  <h1 class="title">Sara's MP3 Player</h1>
   <main class="gallery" id="gallery">
+    <figure class="card" data-audio="music/beluga.mp3">
+      <img class="media" src="images/beluga.png" alt="Beluga" />
+    </figure>
+    <figure class="card" data-audio="music/biscuits.mp3">
+      <img class="media" src="images/biscuits.png" alt="Biscuits" />
+    </figure>
     <figure class="card" data-audio="music/chicken.mp3">
       <img class="media" src="images/chicken.png" alt="Chicken" />
     </figure>
