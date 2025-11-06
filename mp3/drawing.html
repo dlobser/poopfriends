@@ -27,10 +27,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 15px;
       z-index: 100;
     }
-    .clear-btn {
-      background: #ff0000;
+    .clear-btn, .save-btn {
       color: #fff;
       border: 3px solid #fff;
       padding: 10px 30px;
@@ -40,7 +40,13 @@
       transition: transform 0.2s;
       border-radius: 10px;
     }
-    .clear-btn:active {
+    .clear-btn {
+      background: #ff0000;
+    }
+    .save-btn {
+      background: #00aa00;
+    }
+    .clear-btn:active, .save-btn:active {
       transform: scale(0.95);
     }
     .canvas-wrapper {
@@ -92,6 +98,7 @@
 </head>
 <body>
   <div class="top-bar">
+    <button class="save-btn">Save 💾</button>
     <button class="clear-btn">Clear ✕</button>
   </div>
   
@@ -158,6 +165,11 @@
     // Clear button
     document.querySelector('.clear-btn').addEventListener('click', () => {
       background(255);
+    });
+
+    // Save button
+    document.querySelector('.save-btn').addEventListener('click', () => {
+      saveCanvas('sara-drawing', 'jpg');
     });
   </script>
 </body>
