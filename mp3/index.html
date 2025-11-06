@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sara's MP3 Player</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -52,60 +51,6 @@
       aspect-ratio: 1/1;
       object-fit: cover;
     }
-    .canvas-container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 10px;
-    }
-    .canvas-wrapper {
-      position: relative;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 600px;
-    }
-    .canvas-wrapper canvas {
-      width: 100% !important;
-      height: auto !important;
-      display: block;
-    }
-    .color-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 15px;
-    }
-    .color-btn {
-      width: 50px;
-      height: 50px;
-      border: 3px solid #fff;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .color-btn:active {
-      transform: scale(0.9);
-    }
-    .color-btn.active {
-      border-width: 5px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-    }
-    .clear-btn {
-      display: block;
-      margin: 15px auto 0;
-      width: 60px;
-      height: 60px;
-      background: #ff0000;
-      color: #fff;
-      border: 3px solid #fff;
-      border-radius: 50%;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .clear-btn:active {
-      transform: scale(0.9);
-    }
   </style>
 </head>
 <body>
@@ -140,20 +85,7 @@
     </figure>
   </main>
 
-  <div class="canvas-container">
-    <div class="canvas-wrapper" id="canvasWrapper"></div>
-    <div class="color-buttons">
-      <div class="color-btn active" style="background: #000000;" data-color="#000000"></div>
-      <div class="color-btn" style="background: #ff00ff;" data-color="#ff00ff"></div>
-      <div class="color-btn" style="background: #00ffff;" data-color="#00ffff"></div>
-      <div class="color-btn" style="background: #ff8800;" data-color="#ff8800"></div>
-      <div class="color-btn" style="background: #ffff00;" data-color="#ffff00"></div>
-    </div>
-    <button class="clear-btn">✕</button>
-  </div>
-
   <script>
-    // MP3 Player functionality
     (function () {
       const gallery = document.getElementById('gallery');
       const audio = new Audio();
@@ -198,50 +130,6 @@
         if (card) playCard(card);
       });
     })();
-
-    // p5.js Drawing Canvas
-    let currentColor = '#000000';
-
-    function setup() {
-      let w = min(windowWidth - 20, 600);
-      let h = w * 1.5; // Portrait aspect ratio
-      let canvas = createCanvas(w, h);
-      canvas.parent('canvasWrapper');
-      background(255);
-      strokeWeight(9);
-      stroke(currentColor);
-    }
-
-    function draw() {
-      if (mouseIsPressed && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-        line(mouseX, mouseY, pmouseX, pmouseY);
-      }
-    }
-
-    function touchMoved() {
-      if (touches.length > 0) {
-        let touch = touches[0];
-        if (touch.x >= 0 && touch.x <= width && touch.y >= 0 && touch.y <= height) {
-          line(touch.x, touch.y, ptouchX, ptouchY);
-        }
-        return false;
-      }
-    }
-
-    // Color selection
-    document.querySelectorAll('.color-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentColor = btn.getAttribute('data-color');
-        stroke(currentColor);
-      });
-    });
-
-    // Clear button
-    document.querySelector('.clear-btn').addEventListener('click', () => {
-      background(255);
-    });
   </script>
 </body>
 </html>
